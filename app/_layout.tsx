@@ -5,6 +5,9 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import React from 'react';
+import { VehicleProvider } from '../lib/context/VehicleContext';
+import { ToastProvider } from '../lib/context/ToastContext';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
@@ -24,6 +27,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    // Remove all custom font references
     ...FontAwesome.font,
   });
 
@@ -42,7 +46,13 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <VehicleProvider>
+      <ToastProvider>
+        <RootLayoutNav />
+      </ToastProvider>
+    </VehicleProvider>
+  );
 }
 
 function RootLayoutNav() {

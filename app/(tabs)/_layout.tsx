@@ -1,59 +1,71 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { VehicleProvider } from '../../lib/context/VehicleContext';
+import { ToastProvider } from '../../lib/context/ToastContext';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+// Function to handle conditional values based on platform
+const useClientOnlyValue = (web: any, native: any) => {
+  return native;
+};
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
+    <VehicleProvider>
+      <ToastProvider>
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: '#FFCC00',
+            tabBarInactiveTintColor: '#757575',
+            headerShown: useClientOnlyValue(false, true),
+            tabBarStyle: {
+              backgroundColor: '#222222',
+            },
+            headerStyle: {
+              backgroundColor: '#222222',
+            },
+            headerTitleStyle: {
+              color: '#FFFFFF',
+            },
+          }}>
+          <Tabs.Screen
+            name="index"
+            options={{
+              headerShown: false,
+              title: 'Dashboard',
+              tabBarIcon: ({ color }) => <Ionicons name="speedometer" size={24} color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="climate"
+            options={{
+              title: 'Climate',
+              tabBarIcon: ({ color }) => <Ionicons name="thermometer" size={24} color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="fuel"
+            options={{
+              title: 'Fuel',
+              tabBarIcon: ({ color }) => <Ionicons name="flash" size={24} color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="maintenance"
+            options={{
+              title: 'Maintenance',
+              tabBarIcon: ({ color }) => <Ionicons name="construct" size={24} color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="vehicle-documents"
+            options={{
+              title: 'Documents',
+              tabBarIcon: ({ color }) => <Ionicons name="document-text" size={24} color={color} />,
+            }}
+          />
+        </Tabs>
+      </ToastProvider>
+    </VehicleProvider>
   );
 }
