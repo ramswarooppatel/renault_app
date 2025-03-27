@@ -246,22 +246,23 @@ export default function FuelScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => setMenuVisible(true)}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          >
-            <Ionicons name="menu" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
+        <View style={styles.headerContent}>
           <View>
             <Text style={styles.headerTitle}>Fuel Analytics</Text>
             <Text style={styles.headerSubtitle}>
               Real-time metrics and performance indicators
             </Text>
           </View>
+          
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={() => setMenuVisible(true)}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <MaterialCommunityIcons name="menu" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
         </View>
-
+      
         <View style={styles.liveIndicatorContainer}>
           <TouchableOpacity 
             style={styles.liveIndicator}
@@ -275,15 +276,17 @@ export default function FuelScreen() {
               {isLive ? 'Live Data' : 'Paused'}
             </Text>
           </TouchableOpacity>
-
+      
           <TouchableOpacity 
             style={styles.refreshButton}
             onPress={handleRefresh}
+            disabled={loading}
           >
             <Ionicons 
               name="refresh" 
               size={20} 
-              color="#222222" 
+              color="#222222"
+              style={[loading && styles.rotating]} 
             />
           </TouchableOpacity>
         </View>
@@ -420,21 +423,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   header: {
+    backgroundColor: '#222222',
+    paddingTop: 60,
+    paddingBottom: 16,
+  },
+  headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingTop: 60,
     paddingHorizontal: 16,
-    paddingBottom: 16,
-    backgroundColor: '#222222',
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  menuButton: {
-    marginRight: 16,
-    marginTop: 4,
+    marginBottom: 12,
   },
   headerTitle: {
     fontSize: 24,
@@ -446,36 +444,48 @@ const styles = StyleSheet.create({
     color: '#CCCCCC',
     marginTop: 4,
   },
+  menuButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   liveIndicatorContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
   },
   liveIndicator: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 16,
-    marginRight: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
   liveIndicatorDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginRight: 6,
+    marginRight: 8,
   },
   liveIndicatorText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#FFFFFF',
   },
   refreshButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: '#FFCC00',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  rotating: {
+    transform: [{ rotate: '360deg' }],
   },
   vehicleInfoCard: {
     backgroundColor: '#FFFFFF',
