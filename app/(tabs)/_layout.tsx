@@ -37,13 +37,6 @@ export default function TabLayout() {
             }}
           />
           <Tabs.Screen
-            name="climate"
-            options={{
-              title: 'Climate',
-              tabBarIcon: ({ color }) => <Ionicons name="thermometer" size={24} color={color} />,
-            }}
-          />
-          <Tabs.Screen
             name="fuel"
             options={{
               title: 'Fuel',
@@ -51,10 +44,17 @@ export default function TabLayout() {
             }}
           />
           <Tabs.Screen
-            name="maintenance"
+            name="assistant"
             options={{
-              title: 'Maintenance',
-              tabBarIcon: ({ color }) => <Ionicons name="construct" size={24} color={color} />,
+              title: 'AI Assistant',
+              tabBarIcon: ({ color }) => <Ionicons name="chatbubbles" size={24} color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="carcatalogue"
+            options={{
+              title: 'Catalogue',
+              tabBarIcon: ({ color }) => <Ionicons name="car" size={24} color={color} />,
             }}
           />
           <Tabs.Screen
